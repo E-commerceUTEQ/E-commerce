@@ -2,4 +2,13 @@
     <string name="app_name">EcommercePA</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+
+    <string name="home">Home</string>
+    <string name="others">Others</string>
+    <string name="logOff">log off</string>
+    <string name="settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open" />
+    <string name="close" />
 </resources>
