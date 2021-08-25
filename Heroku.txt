@@ -1,0 +1,6 @@
+Instala heroku-cli
+---------------- ir a la ruta del proyecto (backend)
+heroku login
+heroku plugins:install heroku-cli-deploy
+heroku war:deploy [nombre] --app [app]
+heroku war:deploy target\becommerce-1.0.0.war --app becommercee

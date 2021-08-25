@@ -1,0 +1,88 @@
+----------------------tblpharmacy------------------------------
+----------------INSERT----------------
+CREATE OR REPLACE FUNCTION public.insertpharmacy(
+	message_xml xml)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+  DECLARE root_xpath TEXT = '/pharmacy/';
+  resul integer = 0;
+  BEGIN
+    INSERT INTO public.tblpharmacy(user_id,name,address,phone,hoursoperation,dateupdate)values
+			((xpath(root_xpath|| 'user_id/text()', message_xml))[1]::text::integer,
+			 (xpath(root_xpath|| 'name/text()', message_xml))[1],
+			 (xpath(root_xpath|| 'address/text()', message_xml))[1],
+			 (xpath(root_xpath|| 'phone/text()', message_xml))[1],
+			 (xpath(root_xpath|| 'hoursoperation/text()', message_xml))[1],
+			(xpath(root_xpath|| 'dateupdate/text()', message_xml))[1]::text::date);
+	return resul;																			 
+  END;
+$BODY$;
+
+ALTER FUNCTION public.insertpharmacy(xml)
+    OWNER TO mwisklifbwraoc;
+
+----------------DELETE----------------
+----------------UPDATE----------------
+
+----------------------tblproduct------------------------------
+----------------INSERT----------------
+
+CREATE OR REPLACE FUNCTION public.insertproduct(
+	message_xml xml)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+  DECLARE root_xpath TEXT = '/product/';
+  resul integer = 0;
+  BEGIN
+    INSERT INTO public.tblproduct(name,laboratory,certification)values
+			 ((xpath(root_xpath|| 'name/text()', message_xml))[1],
+			 (xpath(root_xpath|| 'laboratory/text()', message_xml))[1],
+			 (xpath(root_xpath|| 'certification/text()', message_xml))[1]::text::boolean);
+	return resul;																			 
+  END;
+$BODY$;
+
+ALTER FUNCTION public.insertproduct(xml)
+    OWNER TO mwisklifbwraoc;
+
+----------------DELETE----------------
+----------------UPDATE----------------
+
+----------------------pharm_prod------------------------------
+----------------INSERT----------------
+
+CREATE OR REPLACE FUNCTION public.insertpharm_prod(
+	message_xml xml)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+  DECLARE root_xpath TEXT = '/pharm_prod/';
+  resul integer = 0;
+  BEGIN
+    INSERT INTO public.pharm_prod(pharmacy_id,product_id,price)values
+			 ((xpath(root_xpath|| 'pharmacy_id/text()', message_xml))[1]::text::integer,
+			 (xpath(root_xpath|| 'product_id/text()', message_xml))[1]::text::integer,
+			 (xpath(root_xpath|| 'price/text()', message_xml))[1]::text::numeric);
+	return resul;																			 
+  END;
+$BODY$;
+
+ALTER FUNCTION public.insertpharm_prod(xml)
+    OWNER TO mwisklifbwraoc;
+
+----------------DELETE----------------
+----------------UPDATE----------------
+
+----------------DELETE----------------
+----------------UPDATE----------------
