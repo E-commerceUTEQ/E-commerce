@@ -1,7 +1,9 @@
 package com.example.ecommercepa.uteq.activitys;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,11 +22,12 @@ import com.android.volley.RequestQueue;
 import com.bumptech.glide.Glide;
 import com.example.ecommercepa.R;
 import com.example.ecommercepa.uteq.fragments.HomeFragment;
+import com.example.ecommercepa.uteq.fragments.PharmacyFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String URL = "https://bsmarthome.herokuapp.com/webresources";
+    private String URL = "https://becommercee.herokuapp.com/";
     private RequestQueue requestQueue;
 
     private DrawerLayout drawerLayout;
@@ -33,13 +36,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     private NavigationView navigationView;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    //variable del fragment detallehome
- //   private DetailHomeFragment detailHomeFragment;
-    //variable del fragment detalleNotifications
- //   private DetailNotificationFragment detailNotificationFragment;
+    private Menu menu;
+
+
     // variables para mantener sesion
     private SharedPreferences preferences;
-    private String user_id, name, last_name, email, address, type, imguser;
+    private String user_id, name, last_name, email, address, role, imguser, registrationdate,
+            dateupdate, birthdaydate, user_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,34 +50,84 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         setContentView(R.layout.activity_menu);
 
         init();
+        sessionuser();
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.navigationView);
+        if (user_id != null && email != null) {
 
-        navigationView.setNavigationItemSelectedListener(this);
-        // añadiendo imagenes full color
-        navigationView.setItemIconTintList(null);
-        // para añadir datos del usuario al menu encabezado
-        View hView = navigationView.getHeaderView(0);
+            toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            drawerLayout = findViewById(R.id.drawerLayout);
+            navigationView = findViewById(R.id.navigationView);
 
+            navigationView.setNavigationItemSelectedListener(this);
+            // añadiendo imagenes full color
+            navigationView.setItemIconTintList(null);
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        actionBarDrawerToggle.syncState();
+            final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+            menu = navigationView.getMenu();
+            if(!role.equals("Administrador")){
+              /*  MenuItem  visivel = menu.findItem(R.id.menuother);
+                MenuItem  visivel2 = menu.findItem(R.id.menuOrdersAdm);
+                visivel.setVisible(false);
+                visivel2.setVisible(false); */
+            }
 
-        fragmentManager = getSupportFragmentManager();//cargar fragment principal en la actividad
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container, new HomeFragment());
-        fragmentTransaction.commit();
+            // para añadir datos del usuario al menu encabezado
+            View hView = navigationView.getHeaderView(0);
+            ImageView foto = (ImageView) hView.findViewById(R.id.imageProfile);
+            TextView Usuario = (TextView) hView.findViewById(R.id.viewNameUser);
+            TextView RolUsuario = (TextView) hView.findViewById(R.id.viewRol);
+            Usuario.setText(name + " " + last_name);
+            RolUsuario.setText(role);
+            Glide.with(this).load(imguser.replace('\\', '/')).into(foto);
 
+            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+            drawerLayout.addDrawerListener(actionBarDrawerToggle);
+            actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+            actionBarDrawerToggle.syncState();
 
+            fragmentManager = getSupportFragmentManager();//cargar fragment principal en la actividad
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.container, new HomeFragment());
+            fragmentTransaction.commit();
+
+        } else {
+            Toast.makeText(menu.this, "No session", Toast.LENGTH_LONG).show();
+            gologin();
+        }
     }
 
     private void init() {
         preferences = getSharedPreferences("Preferences", MODE_PRIVATE);
+    }
+    public void sessionuser() {
+        user_id = preferences.getString("user_id", null);
+        name = preferences.getString("name", null);
+        last_name = preferences.getString("last_name", null);
+        email = preferences.getString("email", null);
+        address = preferences.getString("address", null);
+        role = preferences.getString("role", null);
+        imguser = preferences.getString("imguser", null);
+        dateupdate= preferences.getString("dateupdate",null);
+        registrationdate= preferences.getString("registrationdate",null);
+        birthdaydate= preferences.getString("birthdaydate",null);
+        user_token= preferences.getString("user_token",null);
+    }
+
+    private void gologin() {
+        Intent i = new Intent(this, MainActivity.class);
+        // bandera para que no se creen nuevas actividades innecesarias
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+    }
+
+    private void logoff() {
+        preferences.edit().clear().apply();
+        gologin();
+        Toast.makeText(menu.this, "Closed session", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -88,6 +141,17 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 fragmentTransaction.replace(R.id.container, new HomeFragment());
                 fragmentTransaction.commit();
                 Toast.makeText(menu.this, "Home", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.menuPharmacies:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, new PharmacyFragment());
+                fragmentTransaction.commit();
+                Toast.makeText(menu.this, "Pharmacies", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.logOff:
+                logoff();// vaciar las variables de session
+                Toast.makeText(menu.this, "Log off", Toast.LENGTH_LONG).show();
                 break;
         }
         return false;

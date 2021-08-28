@@ -5,6 +5,11 @@
         android:id="@+id/menuHome"
         android:icon="@drawable/profile"
         android:title="@string/home"/>
+    <item
+        android:id="@+id/menuPharmacies"
+        android:icon="@drawable/ic_baseline_local_pharmacy_24"
+        android:title="@string/pharmacies"/>
+
 
     <item
         android:id="@+id/logOff"

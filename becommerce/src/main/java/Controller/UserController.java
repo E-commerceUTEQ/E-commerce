@@ -34,7 +34,9 @@ public class UserController {
   * @param pwd It is a String variable, this variable will contain the encrypted password of the user
   */
     public Object[] LogIn(String email, String pwd) {
-        DefaultTableModel table = conex.returnRecord("select * from tbluser where email='" + email + "'");
+        DefaultTableModel table = conex.returnRecord("select tbluser.user_id, tbluser.name,tbluser.last_name, tbluser.email, tbluser.password, tbluser.address,\n" +
+"tbltypeuser.role, tbluser.imguser, tbluser.registrationdate, tbluser.dateupdate, tbluser.birthdaydate\n" +
+"from tbluser inner join tbltypeuser on tbltypeuser. typeuser_id = tbluser.typeuser_id where tbluser.email='" + email + "'");
         String message = "Usuario no encontrado";
         boolean status = false;
         Usermodel usr = new Usermodel();

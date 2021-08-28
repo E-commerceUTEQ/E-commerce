@@ -12,7 +12,7 @@ public class Usermodel {
     private String email = "-2";
     private String password = "-2";
     private String address = "-2";
-    private String typeuser_id = "-2";
+    private String type = "-2";
     private String imguser = "-2";
     private String registrationdate = "-2";
     private String dateupdate = "-2";
@@ -70,12 +70,12 @@ public class Usermodel {
         this.address = address;
     }
 
-    public String getTypeuser_id() {
-        return typeuser_id;
+    public String getType() {
+        return type;
     }
 
-    public void setTypeuser_id(String typeuser_id) {
-        this.typeuser_id = typeuser_id;
+    public void setType(String typeuser_id) {
+        this.type = typeuser_id;
     }
 
     public String getImguser() {

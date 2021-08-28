@@ -40,7 +40,7 @@ public class UserDAO {
         usr.setEmail(table.getValueAt(index, 3).toString());
         usr.setPassword(table.getValueAt(index, 4).toString());
         usr.setAddress(table.getValueAt(index, 5).toString());
-        usr.setTypeuser_id(table.getValueAt(index, 6).toString());
+        usr.setType(table.getValueAt(index, 6).toString());
         usr.setImguser(table.getValueAt(index, 7).toString());
         usr.setRegistrationdate(table.getValueAt(index, 8).toString());
         usr.setDateupdate(table.getValueAt(index, 9).toString());
@@ -65,7 +65,7 @@ public class UserDAO {
         jsoB.add("email", usr.getEmail());
         jsoB.add("password", usr.getPassword());
         jsoB.add("address", usr.getAddress());
-        jsoB.add("typeuser_id", usr.getTypeuser_id());
+        jsoB.add("role", usr.getType());
         jsoB.add("imguser", usr.getImguser());
         jsoB.add("registrationdate", usr.getRegistrationdate());
         jsoB.add("dateupdate", usr.getDateupdate());

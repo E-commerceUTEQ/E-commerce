@@ -51,7 +51,6 @@ public class Pharm_prodresource {
         boolean insertpham_pro = false;
         JsonObject Jso = Methods.stringToJSON(data);
         if (Jso.size() > 0) {
-
             Pharm_producmodel pm = new Pharm_producmodel();
             pm.setPharmacy_id(Methods.JsonToString(Jso.getAsJsonObject(), "pharmacy_id", ""));
             pm.setProduct_id(Methods.JsonToString(Jso.getAsJsonObject(), "product_id", ""));
