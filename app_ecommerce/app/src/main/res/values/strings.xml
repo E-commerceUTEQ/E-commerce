@@ -8,6 +8,9 @@
     <string name="others">Others</string>
     <string name="logOff">log off</string>
     <string name="settings">Settings</string>
+    <string name="namepharm">Name</string>
+    <string name="addresspharm">Address</string>
+    <string name="phonepharm">Phone</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open" />
