@@ -18,14 +18,15 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".uteq.activitys.MainActivity">
+        <activity android:name=".uteq.activitys.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".uteq.activitys.MainActivity"/>
         <activity android:name=".uteq.activitys.menu"/>
+        <activity android:name=".uteq.activitys.DrugfinderActivity"/>
     </application>
 
 </manifest>

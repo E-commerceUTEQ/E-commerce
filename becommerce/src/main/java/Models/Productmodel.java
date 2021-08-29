@@ -11,6 +11,7 @@ public class Productmodel {
     private String name = "-2";
     private String laboratory = "-2";
     private String certification = "-2";
+    private String photo = "-2";
 
     public Productmodel() {
     }
@@ -46,6 +47,16 @@ public class Productmodel {
     public void setCertification(String certification) {
         this.certification = certification;
     }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+    
+    
     
     
     

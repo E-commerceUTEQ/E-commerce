@@ -36,16 +36,16 @@ CREATE OR REPLACE FUNCTION public.insertproduct(
     RETURNS text
     LANGUAGE 'plpgsql'
     COST 100
-    VOLATILE 
+    VOLATILE PARALLEL UNSAFE
 AS $BODY$
-
-  DECLARE root_xpath TEXT = '/product/';
+DECLARE root_xpath TEXT = '/product/';
   resul integer = 0;
   BEGIN
-    INSERT INTO public.tblproduct(name,laboratory,certification)values
+    INSERT INTO public.tblproduct(name,laboratory,certification,photo)values
 			 ((xpath(root_xpath|| 'name/text()', message_xml))[1],
 			 (xpath(root_xpath|| 'laboratory/text()', message_xml))[1],
-			 (xpath(root_xpath|| 'certification/text()', message_xml))[1]::text::boolean);
+			 (xpath(root_xpath|| 'certification/text()', message_xml))[1]::text::boolean,
+			 (xpath(root_xpath|| 'photo/text()', message_xml))[1]);
 	return resul;																			 
   END;
 $BODY$;

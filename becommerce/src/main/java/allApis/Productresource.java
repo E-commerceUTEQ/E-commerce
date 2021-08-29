@@ -33,9 +33,21 @@ public class Productresource {
     String productd = productDAO.selectProduct();
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllDevice() {
+    public Response getAllProduct() {
         //TODO return proper representation object
         return Response.ok(productd)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+                .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-with")
+                .build();
+    }
+    String rproduct = productDAO.selectRegisteredProduct();
+    @GET
+    @Path("/allregisteredproduct")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllRegisteredProduct() {
+        //TODO return proper representation object
+        return Response.ok(rproduct)
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
                 .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-with")
@@ -57,7 +69,8 @@ public class Productresource {
             pm.setName(Methods.JsonToString(Jso.getAsJsonObject(), "name", ""));
             pm.setLaboratory(Methods.JsonToString(Jso.getAsJsonObject(), "laboratory", ""));
             pm.setCertification(Methods.JsonToString(Jso.getAsJsonObject(), "certification", ""));
-
+            pm.setPhoto(Methods.JsonToString(Jso.getAsJsonObject(), "photo", ""));
+            
             insertpro = productDAO.insertProduct(pm);
             if (insertpro) {
                 responseJson = "{ \"status\":" + insertpro + ",\"information\": \" The Product was inserted.\"}";

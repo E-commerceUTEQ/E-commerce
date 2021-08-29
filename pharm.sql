@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     25/8/2021 14:20:01                           */
+/* Created on:     28/8/2021 17:36:21                           */
 /*==============================================================*/
 
 
@@ -101,6 +101,7 @@ create table TBLPRODUCT (
    NAME                 CHAR(100)            not null,
    LABORATORY           CHAR(100)            not null,
    CERTIFICATION        BOOL                 not null,
+   PHOTO                TEXT                 not null,
    constraint PK_TBLPRODUCT primary key (PRODUCT_ID),
    constraint AK_IDENTIFIER_1_TBLPRODU unique (PRODUCT_ID)
 );

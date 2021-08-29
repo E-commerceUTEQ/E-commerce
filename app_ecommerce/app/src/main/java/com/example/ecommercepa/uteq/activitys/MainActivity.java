@@ -1,11 +1,14 @@
 package com.example.ecommercepa.uteq.activitys;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ecommercepa.R;
+import com.example.ecommercepa.uteq.Utilities.Utilities;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        if(validatesesion()){
+      /*  if(validatesesion()){
             Toast.makeText(MainActivity.this, "Active session", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(MainActivity.this, "Session not active", Toast.LENGTH_LONG).show();
-        }
+        } */
 
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         int size = response.length();
-                        response = fixEncoding(response);
+                        response = Utilities.fixEncoding(response);
                         JSONObject json_transform = null;
                         try {
                             if (size > 0)
@@ -156,18 +160,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static String fixEncoding(String response) {
-        try {
-            byte[] u = response.toString().getBytes(
-                    "ISO-8859-1");
-            response = new String(u, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return response;
-    }
-
     public void sessionuser() {
         user_id = preferences.getString("user_id", null);
         name = preferences.getString("name", null);
@@ -180,6 +172,44 @@ public class MainActivity extends AppCompatActivity {
         registrationdate= preferences.getString("registrationdate",null);
         birthdaydate= preferences.getString("birthdaydate",null);
         user_token= preferences.getString("user_token",null);
+    }
+
+    // Se controla la pulsación del botón atrás
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == event.KEYCODE_BACK) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Would you like to return to Home?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_HOME);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            goHome();
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            builder.show();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void goHome(){
+        Intent i = new Intent(this, HomeActivity.class);
+        // bandera para que no se creen nuevas actividades innecesarias
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+        Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_LONG).show();
     }
 
     private boolean validatesesion(){
