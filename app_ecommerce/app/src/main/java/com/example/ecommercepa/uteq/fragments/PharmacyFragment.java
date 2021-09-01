@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ecommercepa.R;
+import com.example.ecommercepa.uteq.activitys.menu;
 
 public class PharmacyFragment extends Fragment {
 
@@ -31,7 +32,7 @@ public class PharmacyFragment extends Fragment {
         btnAddPharmacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager = getFragmentManager();
+                fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, new AddPharmacyFragment());
                 fragmentTransaction.commit();
@@ -42,6 +43,17 @@ public class PharmacyFragment extends Fragment {
         btnSearchPharmacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+            /*    SearchPharmacyFragment fr=new SearchPharmacyFragment();
+                fr.setArguments(bn);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contenedor,fr)
+                        .addToBackStack(null)
+                        .commit(); */
+                fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, new SearchPharmacyFragment());
+                fragmentTransaction.commit();
                 Toast.makeText(getActivity(), "Search", Toast.LENGTH_LONG).show();
             }
         });

@@ -32,7 +32,7 @@ public class Pharmacyresource {
     String pharmacyd = pharmacyDAO.selectPharmacy();
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllDevice() {
+    public Response getAllPharmacy() {
         //TODO return proper representation object
         return Response.ok(pharmacyd)
                 .header("Access-Control-Allow-Origin", "*")
@@ -40,6 +40,30 @@ public class Pharmacyresource {
                 .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-with")
                 .build();
     }
+    
+    @Produces(MediaType.APPLICATION_JSON)
+    @POST
+    @Path("/pharmacybyuser")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response pharmacybyuser(String data) {
+        System.out.println(data);
+        String responseJson = "{\"status\":\"poken:" + data + "\"}";
+        
+        JsonObject Jso = Methods.stringToJSON(data);
+        if (Jso.size() > 0) {
+             String user_id = Methods.JsonToString(Jso.getAsJsonObject(), "user_id", "");
+            String pharcybyuser = pharmacyDAO.selectPharmacybyuser(user_id);
+            responseJson = "{\"message\":\" Data returned successfully.\",\"flag\":true,\"data\":" + pharcybyuser + "}";
+        }else {
+            responseJson = "{\"message\":\"Missing data.\",\"nameApplication\":\"" + DataBd.nameApplication + "\",\"flag\":" + false + "}";
+        }
+        return Response.ok(responseJson)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+                .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-with")
+                .build();
+    }
+    
 
     @Produces(MediaType.APPLICATION_JSON)
     @POST

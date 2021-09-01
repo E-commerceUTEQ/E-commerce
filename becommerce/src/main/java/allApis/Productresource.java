@@ -53,6 +53,29 @@ public class Productresource {
                 .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-with")
                 .build();
     }
+    
+    @Produces(MediaType.APPLICATION_JSON)
+    @POST
+    @Path("/productbypharm")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response productbypharm(String data) {
+        System.out.println(data);
+        String responseJson = "{\"status\":\"poken:" + data + "\"}";
+        
+        JsonObject Jso = Methods.stringToJSON(data);
+        if (Jso.size() > 0) {
+             String pharmacy_id = Methods.JsonToString(Jso.getAsJsonObject(), "pharmacy_id", "");
+            String prodbypharm = productDAO.selectProductbypharm(pharmacy_id);
+            responseJson = "{\"message\":\" Data returned successfully.\",\"flag\":true,\"data\":" + prodbypharm + "}";
+        }else {
+            responseJson = "{\"message\":\"Missing data.\",\"nameApplication\":\"" + DataBd.nameApplication + "\",\"flag\":" + false + "}";
+        }
+        return Response.ok(responseJson)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+                .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-with")
+                .build();
+    }
 
     @Produces(MediaType.APPLICATION_JSON)
     @POST

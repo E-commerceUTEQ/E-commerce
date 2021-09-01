@@ -21,6 +21,12 @@ public class PharmacyDAO {
         String json = con.getRecordsInJson(sentence);
         return json;
     }
+    
+    public String selectPharmacybyuser(String user_id) {
+        sentence = "select * from tblpharmacy where user_id="+user_id;
+        String json = con.getRecordsInJson(sentence);
+        return json;
+    }
 
     public boolean insertPharmacy(Pharmacymodel pharmacymodel) {
         String structure = String.format(

@@ -92,9 +92,6 @@
                     andriod:textColor="#C90000"
                     andriod:textSize="16sp" />
 
-
-
-
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

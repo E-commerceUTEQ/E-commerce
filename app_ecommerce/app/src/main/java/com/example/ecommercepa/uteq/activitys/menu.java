@@ -23,9 +23,12 @@ import com.bumptech.glide.Glide;
 import com.example.ecommercepa.R;
 import com.example.ecommercepa.uteq.fragments.HomeFragment;
 import com.example.ecommercepa.uteq.fragments.PharmacyFragment;
+import com.example.ecommercepa.uteq.fragments.ProductbyPharmacyFragment;
+import com.example.ecommercepa.uteq.interfaces.iCommunicates_Fragments;
+import com.example.ecommercepa.uteq.model.PharmacyModel;
 import com.google.android.material.navigation.NavigationView;
 
-public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, iCommunicates_Fragments {
 
     private String URL = "https://becommercee.herokuapp.com/";
     private RequestQueue requestQueue;
@@ -37,6 +40,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private Menu menu;
+
+    private ProductbyPharmacyFragment productbyPharmacyFragment;
 
 
     // variables para mantener sesion
@@ -155,5 +160,18 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void SendPharmacy(PharmacyModel pharmacyModel) {
+        productbyPharmacyFragment = new ProductbyPharmacyFragment();// aquí se realiza toda la lógica necesaria para poder realizar el envio
+        Bundle bundleSend = new Bundle();// object bundle para transportar la información
+        bundleSend.putSerializable("object", pharmacyModel);// enviar el objeto que está llegando con Serializable
+        productbyPharmacyFragment.setArguments(bundleSend);
+        // abrir fragment
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, productbyPharmacyFragment);
+        fragmentTransaction.commit();
     }
 }

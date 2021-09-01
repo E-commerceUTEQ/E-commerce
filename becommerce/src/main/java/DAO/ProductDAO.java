@@ -32,6 +32,17 @@ public class ProductDAO {
         return json;
     }
 
+    public String selectProductbypharm(String pharmacy_id) {
+        sentence = "select tblproduct.product_id, tblproduct.name, tblproduct.laboratory, tblproduct.certification, tblproduct.photo\n"
+                + "from pharm_prod as profarm\n"
+                + "inner join tblproduct on profarm.product_id = tblproduct.product_id\n"
+                + "inner join tblpharmacy on tblpharmacy.pharmacy_id = profarm.pharmacy_id\n"
+                + "where tblpharmacy.pharmacy_id =" + pharmacy_id;
+
+        String json = con.getRecordsInJson(sentence);
+        return json;
+    }
+
     public boolean insertProduct(Productmodel productmodel) {
         String structure = String.format(
                 "<product>"
