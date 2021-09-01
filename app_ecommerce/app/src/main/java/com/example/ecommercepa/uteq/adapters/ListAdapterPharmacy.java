@@ -45,6 +45,7 @@ public class ListAdapterPharmacy extends RecyclerView.Adapter<ListAdapterPharmac
         holder.name.setText(mData.get(position).getName());
         holder.address.setText(mData.get(position).getAddress());
         holder.phone.setText(mData.get(position).getPhone());
+        holder.hoursoperation.setText(mData.get(position).getHoursoperation());
         Glide.with(context).load("https://as.com/diarioas/imagenes/2021/01/31/actualidad/1612128752_898054_1612128997_noticia_normal_recorte1.jpg").into(holder.photo);
 
     }
@@ -76,6 +77,7 @@ public class ListAdapterPharmacy extends RecyclerView.Adapter<ListAdapterPharmac
             name = itemView.findViewById(R.id.pharmname);
             address = itemView.findViewById(R.id.addresspharm);
             phone = itemView.findViewById(R.id.phonepharm);
+            hoursoperation = itemView.findViewById(R.id.operationpharm);
 
 
         }
